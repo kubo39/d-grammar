@@ -9,6 +9,7 @@
 %x blockcomment
 %x doublequotedstring
 %x linecomment
+%x nestingblockcomment
 %x suffix
 
 identifier [_a-zA-Z][_a-zA-Z0-9]*
@@ -27,6 +28,11 @@ identifier [_a-zA-Z][_a-zA-Z0-9]*
 \/\*                 { yy_push_state(blockcomment); }
 <blockcomment>\*\/   { yy_pop_state(); }
 <blockcomment>(.|\n) { }
+
+\/\+                        { yy_push_state(nestingblockcomment); }
+<nestingblockcomment>\/\+   { yy_push_state(nestingblockcomment); }
+<nestingblockcomment>\+\/   { yy_pop_state(); }
+<nestingblockcomment>(.|\n) { }
 
 abstract { return ABSTRACT; }
 alias    { return ALIAS; }
