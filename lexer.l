@@ -3,8 +3,10 @@
 
 %}
 
+%option stack
 %option yylineno
 
+%x blockcomment
 %x doublequotedstring
 %x linecomment
 %x suffix
@@ -21,6 +23,11 @@ identifier [_a-zA-Z][_a-zA-Z0-9]*
 \/\/                { BEGIN(linecomment); }
 <linecomment>\n     { BEGIN(INITIAL); }
 <linecomment>[^\n]* { }
+
+\/\*                 { yy_push_state(blockcomment); }
+<blockcomment>\/\*   { yy_push_state(blockcomment); }
+<blockcomment>\*\/   { yy_pop_state(); }
+<blockcomment>(.|\n) { }
 
 abstract { return ABSTRACT; }
 alias    { return ALIAS; }
