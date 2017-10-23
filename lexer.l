@@ -15,6 +15,8 @@ identifier [_a-zA-Z][_a-zA-Z0-9]*
 <suffix>{identifier}      { BEGIN(INITIAL); }
 <suffix>(.|\n) { yyless(0); BEGIN(INITIAL); }
 
+[\x20\x09\x0B\x0C]  { }
+
 abstract { return ABSTRACT; }
 alias    { return ALIAS; }
 align    { return ALIGN; }
@@ -145,7 +147,7 @@ __parameters  { return SPPARAMETERS; }
 <doublequotedstring>\\[0-7]{1,3}                          { yymore(); }
 <doublequotedstring>\\u[0-9a-fA-F]{4}                     { yymore(); }
 <doublequotedstring>\\U[0-9a-fA-F]{8}                     { yymore(); }
-<doublequotedstring>[a-zA-Z]+                             { yymore(); }
+<doublequotedstring>[0-9a-zA-Z _]+                        { yymore(); }
 
 \/      { return '/'; }
 \/=     { return SLASHEQ; }
