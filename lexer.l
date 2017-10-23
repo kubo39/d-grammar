@@ -131,10 +131,10 @@ __parameters  { return SPPARAMETERS; }
 
 {identifier} { return IDENTIFIER; }
 
-0[xX][0-9a-fA-F_]+ { return INTEGER; }
-0[bB][01_]+      { return INTEGER; }
-[0-9]         { return INTEGER; }
-[1-9][0-9_]*  { return INTEGER; }
+0[xX][0-9a-fA-F_]+([uU]?L?|L?[uU]?) { return INTEGER; }
+0[bB][01_]+([uU]?L?|L?[uU]?)        { return INTEGER; }
+[0-9]([uU]?L?|L?[uU]?)              { return INTEGER; }
+[1-9][0-9_]*([uU]?L?|L?[uU]?)       { return INTEGER; }
 
 \x22          { BEGIN(string); yymore(); }
 <string>\x22  { BEGIN(suffix); return DOUBLEQOUTEDSTRING; }
