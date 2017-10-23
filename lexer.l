@@ -5,7 +5,7 @@
 
 %option yylineno
 
-%x string
+%x doublequotedstring
 %x suffix
 
 identifier [_a-zA-Z][_a-zA-Z0-9]*
@@ -136,11 +136,16 @@ __parameters  { return SPPARAMETERS; }
 [0-9]([uU]?L?|L?[uU]?)              { return INTEGER; }
 [1-9][0-9_]*([uU]?L?|L?[uU]?)       { return INTEGER; }
 
-\x22          { BEGIN(string); yymore(); }
-<string>\x22  { BEGIN(suffix); return DOUBLEQOUTEDSTRING; }
+\x22                     { BEGIN(doublequotedstring); yymore(); }
+<doublequotedstring>\x22 { BEGIN(suffix); return DOUBLEQOUTEDSTRING; }
 
-<string><<EOF>>   { return -1; }
-<string>[a-zA-Z]+ { yymore(); }
+<doublequotedstring><<EOF>>                               { return -1; }
+<doublequotedstring>\\[\x27\x22\?\\\\a\\b\\f\\n\\r\\t\\v] { yymore(); }
+<doublequotedstring>\\x[0-9a-fA-F]{2}                     { yymore(); }
+<doublequotedstring>\\[0-7]{1,3}                          { yymore(); }
+<doublequotedstring>\\[uU][0-9a-fA-F]{4}                  { yymore(); }
+<doublequotedstring>\\[uU][0-9a-fA-F]{8}                  { yymore(); }
+<doublequotedstring>[a-zA-Z]+                             { yymore(); }
 
 \/      { return '/'; }
 \/=     { return SLASHEQ; }
