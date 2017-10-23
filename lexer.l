@@ -25,7 +25,6 @@ identifier [_a-zA-Z][_a-zA-Z0-9]*
 <linecomment>[^\n]* { }
 
 \/\*                 { yy_push_state(blockcomment); }
-<blockcomment>\/\*   { yy_push_state(blockcomment); }
 <blockcomment>\*\/   { yy_pop_state(); }
 <blockcomment>(.|\n) { }
 
