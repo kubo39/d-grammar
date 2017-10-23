@@ -143,8 +143,8 @@ __parameters  { return SPPARAMETERS; }
 <doublequotedstring>\\[\x27\x22\?\\\\a\\b\\f\\n\\r\\t\\v] { yymore(); }
 <doublequotedstring>\\x[0-9a-fA-F]{2}                     { yymore(); }
 <doublequotedstring>\\[0-7]{1,3}                          { yymore(); }
-<doublequotedstring>\\[uU][0-9a-fA-F]{4}                  { yymore(); }
-<doublequotedstring>\\[uU][0-9a-fA-F]{8}                  { yymore(); }
+<doublequotedstring>\\u[0-9a-fA-F]{4}                     { yymore(); }
+<doublequotedstring>\\U[0-9a-fA-F]{8}                     { yymore(); }
 <doublequotedstring>[a-zA-Z]+                             { yymore(); }
 
 \/      { return '/'; }
