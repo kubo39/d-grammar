@@ -131,11 +131,9 @@ __parameters  { return SPPARAMETERS; }
 
 {identifier} { return IDENTIFIER; }
 
-0x[0-9a-fA-F_]+ { return INTEGER; }
-0X[0-9a-fA-F_]+ { return INTEGER; }
-0b[01_]+      { return INTEGER; }
-0B[01_]+      { return INTEGER; }
-[0-9]+        { return INTEGER; }
+0[xX][0-9a-fA-F_]+ { return INTEGER; }
+0[bB][01_]+      { return INTEGER; }
+[0-9]         { return INTEGER; }
 [1-9][0-9_]*  { return INTEGER; }
 
 \x22          { BEGIN(string); yymore(); }
