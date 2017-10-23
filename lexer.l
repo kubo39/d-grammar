@@ -6,10 +6,14 @@
 %option yylineno
 
 %x string
+%x suffix
 
 identifier [_a-zA-Z][_a-zA-Z0-9]*
 
 %%
+
+<suffix>{identifier}      { BEGIN(INITIAL); }
+<suffix>(.|\n) { yyless(0); BEGIN(INITIAL); }
 
 abstract { return ABSTRACT; }
 alias    { return ALIAS; }
@@ -135,7 +139,7 @@ __parameters  { return SPPARAMETERS; }
 [1-9][0-9_]*  { return INTEGER; }
 
 \x22          { BEGIN(string); yymore(); }
-<string>\x22  { return DOUBLEQOUTEDSTRING; }
+<string>\x22  { BEGIN(suffix); return DOUBLEQOUTEDSTRING; }
 
 <string><<EOF>>   { return -1; }
 <string>[a-zA-Z]+ { yymore(); }
