@@ -6,6 +6,7 @@
 %option yylineno
 
 %x doublequotedstring
+%x linecomment
 %x suffix
 
 identifier [_a-zA-Z][_a-zA-Z0-9]*
@@ -16,6 +17,10 @@ identifier [_a-zA-Z][_a-zA-Z0-9]*
 <suffix>(.|\n) { yyless(0); BEGIN(INITIAL); }
 
 [\x20\x09\x0B\x0C]  { }
+
+\/\/                { BEGIN(linecomment); }
+<linecomment>\n     { BEGIN(INITIAL); }
+<linecomment>[^\n]* { }
 
 abstract { return ABSTRACT; }
 alias    { return ALIAS; }
