@@ -131,8 +131,8 @@ __parameters  { return SPPARAMETERS; }
 
 {identifier} { return IDENTIFIER; }
 
-0x[0-9a-fA-F][0-9a-fA-F_]* { return INTEGER; }
-0X[0-9a-fA-F][0-9a-fA-F_]* { return INTEGER; }
+0x[0-9a-fA-F_]+ { return INTEGER; }
+0X[0-9a-fA-F_]+ { return INTEGER; }
 0b[01_]+      { return INTEGER; }
 0B[01_]+      { return INTEGER; }
 [0-9]+        { return INTEGER; }
