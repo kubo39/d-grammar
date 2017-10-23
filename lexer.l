@@ -147,7 +147,7 @@ __parameters  { return SPPARAMETERS; }
 <doublequotedstring>\\[0-7]{1,3}                          { yymore(); }
 <doublequotedstring>\\u[0-9a-fA-F]{4}                     { yymore(); }
 <doublequotedstring>\\U[0-9a-fA-F]{8}                     { yymore(); }
-<doublequotedstring>[0-9a-zA-Z _]+                        { yymore(); }
+<doublequotedstring>.                                     { yymore(); }
 
 \/      { return '/'; }
 \/=     { return SLASHEQ; }
