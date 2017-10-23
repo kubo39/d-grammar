@@ -136,8 +136,8 @@ __parameters  { return SPPARAMETERS; }
 [0-9]([uU]?L?|L?[uU]?)              { return INTEGER; }
 [1-9][0-9_]*([uU]?L?|L?[uU]?)       { return INTEGER; }
 
-\x22                     { BEGIN(doublequotedstring); yymore(); }
-<doublequotedstring>\x22 { BEGIN(suffix); return DOUBLEQOUTEDSTRING; }
+\x22                           { BEGIN(doublequotedstring); yymore(); }
+<doublequotedstring>\x22[cwd]? { BEGIN(suffix); return DOUBLEQOUTEDSTRING; }
 
 <doublequotedstring><<EOF>>                               { return -1; }
 <doublequotedstring>\\[\x27\x22\?\\\\a\\b\\f\\n\\r\\t\\v] { yymore(); }
