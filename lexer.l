@@ -13,6 +13,7 @@
 %x linecomment
 %x nestingblockcomment
 %x suffix
+%x tokenstring
 %x wysiwygstring
 
 identifier [_a-zA-Z][_a-zA-Z0-9]*
@@ -186,6 +187,13 @@ r\x22                        { BEGIN(wysiwygstring); yymore(); }
 <doublequotedstring>\\u[0-9a-fA-F]{4}                     { yymore(); }
 <doublequotedstring>\\U[0-9a-fA-F]{8}                     { yymore(); }
 <doublequotedstring>(.|\n)                                { yymore(); }
+
+q\{                          { BEGIN(tokenstring); yymore(); }
+<tokenstring>\}              { BEGIN(suffix); return TOKENSTRING; }
+
+<tokenstring><<EOF>>         { return -1; }
+<tokenstring>.               { yymore(); }
+
 
 \/      { return '/'; }
 \/=     { return SLASHEQ; }

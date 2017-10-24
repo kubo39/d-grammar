@@ -130,6 +130,9 @@ enum Token {
   // HexString.
   HEXSTRING,
 
+  // TokenString.
+  TOKENSTRING,
+
   // Rest Tokens.
   SLASHEQ,
   DOTDOT,
