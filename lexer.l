@@ -197,7 +197,7 @@ r\x22                        { BEGIN(wysiwygstring); yymore(); }
 <doublequotedstring>[\x0D\x0A\x2028\x2029]                { yymore(); }
 <doublequotedstring>(\x0D\x0A|\x0A\x0D)                   { yymore(); }
 <doublequotedstring>[\x00\x1A]                            { return -1; }
-<doublequotedstring>(.|\n)                                { yymore(); }
+<doublequotedstring>.                                     { yymore(); }
 
 q\{                          { BEGIN(tokenstring); yymore(); }
 <tokenstring>\}              { BEGIN(suffix); return TOKENSTRING; }
