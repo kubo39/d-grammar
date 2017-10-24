@@ -162,36 +162,45 @@ __parameters  { return SPPARAMETERS; }
 x\x22                        { BEGIN(hexstring); yymore(); }
 <hexstring>\x22[cwd]?        { BEGIN(suffix); return HEXSTRING; }
 
-<hexstring><<EOF>>                           { return -1; }
-<hexstring>([0-9a-fA-F\x20\x09\x0B\x0C]+|\n) { yymore(); }
+<hexstring><<EOF>>                                          { yymore(); }
+<hexstring>[0-9a-fA-F\x20\x09\x0B\x0C\x0D\x0A\x2028\x2029]+ { yymore(); }
+<hexstring>\\(\x0D\x0A|\x0A\x0D)                            { yymore(); }
+<hexstring>\\[\x00\x1A]                                     { yymore(); }
 
 r\x22                        { BEGIN(wysiwygstring); yymore(); }
 <wysiwygstring>\x22[cwd]?    { BEGIN(suffix); return WYSIWYGSTRING; }
 
-<wysiwygstring><<EOF>>       { return -1; }
-<wysiwygstring>(.|\n)        { yymore(); }
+<wysiwygstring><<EOF>>                  { yymore(); }
+<wysiwygstring>\\[\x0D\x0A\x2028\x2029] { yymore(); }
+<wysiwygstring>\\[\x00\x1A]             { yymore(); }
+<wysiwygstring>.                        { yymore(); }
 
 \x60                                    { BEGIN(alternativewysiwygstring); yymore(); }
 <alternativewysiwygstring>\x60[cwd]?    { BEGIN(suffix); return WYSIWYGSTRING; }
 
-<alternativewysiwygstring><<EOF>>       { return -1; }
-<alternativewysiwygstring>(.|\n)        { yymore(); }
+<alternativewysiwygstring><<EOF>>                  { yymore(); }
+<alternativewysiwygstring>\\[\x0D\x0A\x2028\x2029] { yymore(); }
+<alternativewysiwygstring>\\[\x00\x1A]             { yymore(); }
+<alternativewysiwygstring>.                        { yymore(); }
 
 \x22                           { BEGIN(doublequotedstring); yymore(); }
 <doublequotedstring>\x22[cwd]? { BEGIN(suffix); return DOUBLEQOUTEDSTRING; }
 
-<doublequotedstring><<EOF>>                               { return -1; }
+<doublequotedstring><<EOF>>                               { yymore(); }
+<doublequotedstring>\\[\x0D\x0A\x2028\x2029]              { yymore(); }
+<doublequotedstring>\\(\x0D\x0A|\x0A\x0D)                 { yymore(); }
+<doublequotedstring>\\[\x00\x1A]                          { yymore(); }
 <doublequotedstring>\\[\x27\x22\?\\\\a\\b\\f\\n\\r\\t\\v] { yymore(); }
 <doublequotedstring>\\x[0-9a-fA-F]{2}                     { yymore(); }
 <doublequotedstring>\\[0-7]{1,3}                          { yymore(); }
 <doublequotedstring>\\u[0-9a-fA-F]{4}                     { yymore(); }
 <doublequotedstring>\\U[0-9a-fA-F]{8}                     { yymore(); }
-<doublequotedstring>(.|\n)                                { yymore(); }
+<doublequotedstring>.                                     { yymore(); }
 
 q\{                          { BEGIN(tokenstring); yymore(); }
 <tokenstring>\}              { BEGIN(suffix); return TOKENSTRING; }
 
-<tokenstring><<EOF>>         { return -1; }
+<tokenstring><<EOF>>         { yymore(); }
 <tokenstring>.               { yymore(); }
 
 
