@@ -6,11 +6,13 @@
 %option stack
 %option yylineno
 
+%x alternativewysiwygstring
 %x blockcomment
 %x doublequotedstring
 %x linecomment
 %x nestingblockcomment
 %x suffix
+%x wysiwygstring
 
 identifier [_a-zA-Z][_a-zA-Z0-9]*
 
@@ -154,6 +156,18 @@ __parameters  { return SPPARAMETERS; }
 0[bB][01_]+([uU]?L?|L?[uU]?)        { return INTEGER; }
 [0-9]([uU]?L?|L?[uU]?)              { return INTEGER; }
 [1-9][0-9_]*([uU]?L?|L?[uU]?)       { return INTEGER; }
+
+r\x22                        { BEGIN(wysiwygstring); yymore(); }
+<wysiwygstring>\x22[cwd]?    { BEGIN(suffix); return WYSIWYGSTRING; }
+
+<wysiwygstring><<EOF>>       { return -1; }
+<wysiwygstring>(.|\n)        { yymore(); }
+
+\x60                                    { BEGIN(alternativewysiwygstring); yymore(); }
+<alternativewysiwygstring>\x60[cwd]?    { BEGIN(suffix); return WYSIWYGSTRING; }
+
+<alternativewysiwygstring><<EOF>>       { return -1; }
+<alternativewysiwygstring>(.|\n)        { yymore(); }
 
 \x22                           { BEGIN(doublequotedstring); yymore(); }
 <doublequotedstring>\x22[cwd]? { BEGIN(suffix); return DOUBLEQOUTEDSTRING; }

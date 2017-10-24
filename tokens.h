@@ -124,6 +124,9 @@ enum Token {
   // String.
   DOUBLEQOUTEDSTRING,
 
+  // WysiwygString.
+  WYSIWYGSTRING,
+
   // Rest Tokens.
   SLASHEQ,
   DOTDOT,

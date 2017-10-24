@@ -176,6 +176,7 @@ void print_token(int token) {
 
   case INTEGER: printf("INTEGER"); break;
   case DOUBLEQOUTEDSTRING: printf("DoubleQuotedString(%s)", yytext); break;
+  case WYSIWYGSTRING: printf("WYSIWYGSTRING(%s)", yytext); break;
 
   case SLASHEQ: printf("SLASHEQ"); break;
   case DOTDOT: printf("DOTDOT"); break;
