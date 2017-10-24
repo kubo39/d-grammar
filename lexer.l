@@ -9,6 +9,7 @@
 %x alternativewysiwygstring
 %x blockcomment
 %x doublequotedstring
+%x hexstring
 %x linecomment
 %x nestingblockcomment
 %x suffix
@@ -156,6 +157,12 @@ __parameters  { return SPPARAMETERS; }
 0[bB][01_]+([uU]?L?|L?[uU]?)        { return INTEGER; }
 [0-9]([uU]?L?|L?[uU]?)              { return INTEGER; }
 [1-9][0-9_]*([uU]?L?|L?[uU]?)       { return INTEGER; }
+
+x\x22                        { BEGIN(hexstring); yymore(); }
+<hexstring>\x22[cwd]?        { BEGIN(suffix); return HEXSTRING; }
+
+<hexstring><<EOF>>                           { return -1; }
+<hexstring>([0-9a-fA-F\x20\x09\x0B\x0C]+|\n) { yymore(); }
 
 r\x22                        { BEGIN(wysiwygstring); yymore(); }
 <wysiwygstring>\x22[cwd]?    { BEGIN(suffix); return WYSIWYGSTRING; }

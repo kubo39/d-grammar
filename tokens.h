@@ -127,6 +127,9 @@ enum Token {
   // WysiwygString.
   WYSIWYGSTRING,
 
+  // HexString.
+  HEXSTRING,
+
   // Rest Tokens.
   SLASHEQ,
   DOTDOT,
