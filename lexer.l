@@ -178,7 +178,7 @@ r\x22                        { BEGIN(wysiwygstring); yymore(); }
 <doublequotedstring>\\[0-7]{1,3}                          { yymore(); }
 <doublequotedstring>\\u[0-9a-fA-F]{4}                     { yymore(); }
 <doublequotedstring>\\U[0-9a-fA-F]{8}                     { yymore(); }
-<doublequotedstring>.                                     { yymore(); }
+<doublequotedstring>(.|\n)                                { yymore(); }
 
 \/      { return '/'; }
 \/=     { return SLASHEQ; }
