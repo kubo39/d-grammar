@@ -27,7 +27,7 @@ identifier [_a-zA-Z][_a-zA-Z0-9]*
 
 \/\/                                 { BEGIN(linecomment); }
 <linecomment>[\x0D\x0A\x2028\x2029]  { BEGIN(INITIAL); }
-<linecomment>(\x0D\x0A|\x0A\x0D)     { BEGIN(INITIAL); }
+<linecomment>\x0D\x0A                { BEGIN(INITIAL); }
 <linecomment>.                       { }
 
 \/\*                 { yy_push_state(blockcomment); }
@@ -166,7 +166,7 @@ x\x22                        { BEGIN(hexstring); yymore(); }
 <hexstring><<EOF>>                                          { return -1; }
 <hexstring>[0-9a-fA-F\x20\x09\x0B\x0C\x0D\x0A\x2028\x2029]  { yymore(); }
 <hexstring>[\x00\x1A]                                       { return -1; }
-<hexstring>(\x0D\x0A|\x0A\x0D)                              { yymore(); }
+<hexstring>\x0D\x0A                                         { yymore(); }
 
 r\x22                        { BEGIN(wysiwygstring); yymore(); }
 <wysiwygstring>\x22[cwd]?    { BEGIN(suffix); return WYSIWYGSTRING; }
@@ -181,7 +181,7 @@ r\x22                        { BEGIN(wysiwygstring); yymore(); }
 
 <alternativewysiwygstring><<EOF>>                { return -1; }
 <alternativewysiwygstring>[\x0D\x0A\x2028\x2029] { yymore(); }
-<alternativewysiwygstring>(\x0D\x0A|\x0A\x0D)    { yymore(); }
+<alternativewysiwygstring>\x0D\x0A               { yymore(); }
 <alternativewysiwygstring>[\x00\x1A]             { return -1; }
 <alternativewysiwygstring>.                      { yymore(); }
 
@@ -195,7 +195,7 @@ r\x22                        { BEGIN(wysiwygstring); yymore(); }
 <doublequotedstring>\\u[0-9a-fA-F]{4}                     { yymore(); }
 <doublequotedstring>\\U[0-9a-fA-F]{8}                     { yymore(); }
 <doublequotedstring>[\x0D\x0A\x2028\x2029]                { yymore(); }
-<doublequotedstring>(\x0D\x0A|\x0A\x0D)                   { yymore(); }
+<doublequotedstring>\x0D\x0A                              { yymore(); }
 <doublequotedstring>[\x00\x1A]                            { return -1; }
 <doublequotedstring>.                                     { yymore(); }
 
