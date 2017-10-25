@@ -164,7 +164,7 @@ x\x22                        { BEGIN(hexstring); yymore(); }
 <hexstring>\x22[cwd]?        { BEGIN(suffix); return HEXSTRING; }
 
 <hexstring><<EOF>>                                          { return -1; }
-<hexstring>[0-9a-fA-F\x20\x09\x0B\x0C\x0D\x0A\x2028\x2029]+ { yymore(); }
+<hexstring>[0-9a-fA-F\x20\x09\x0B\x0C\x0D\x0A\x2028\x2029]  { yymore(); }
 <hexstring>[\x00\x1A]                                       { return -1; }
 <hexstring>(\x0D\x0A|\x0A\x0D)                              { yymore(); }
 
