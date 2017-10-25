@@ -161,7 +161,31 @@ __parameters  { return SPPARAMETERS; }
 [1-9][0-9_]*([uU]?L?|L?[uU]?)       { return INTEGER; }
 
 [0-9]\.[0-9]*([fFL]?i?)         { return FLOATINGPOINT; }
-[1-9][0-9_]*\.[0-9]*([fFL]?i?)  { return FLOATINGPOINT; }
+[1-9][0-9_]+\.[0-9]*([fFL]?i?)  { return FLOATINGPOINT; }
+0[0-9][0-9_]+\.[0-9]*([fFL]?i?) { return FLOATINGPOINT; }
+0[0-9_]+[0-9]\.[0-9]*([fFL]?i?) { return FLOATINGPOINT; }
+
+[0-9]+\.[0-9]+[0-9_]*[eE](\+|-)?_?[0-9]+_?([fFL]?i?) { return FLOATINGPOINT; }
+
+\.[0-9]([fFL]?i?)                             { return FLOATINGPOINT; }
+\.[1-9][0-9_]+([fFL]?i?)                      { return FLOATINGPOINT; }
+\.[0-9][eE](\+|-)?_?[0-9]+_?([fFL]?i?)        { return FLOATINGPOINT; }
+\.[1-9][0-9_]+[eE](\+|-)?_?[0-9]+_?([fFL]?i?) { return FLOATINGPOINT; }
+
+[0-9][eE](\+|-)?_?[0-9]+_?([fFL]?i?)         { return FLOATINGPOINT; }
+[1-9][0-9_][eE](\+|-)?_?[0-9]+_?([fFL]?i?)   { return FLOATINGPOINT; }
+0[0-9][0-9_]+[eE](\+|-)?_?[0-9]+_?([fFL]?i?) { return FLOATINGPOINT; }
+0[0-9_]+[0-9][eE](\+|-)?_?[0-9]+_?([fFL]?i?) { return FLOATINGPOINT; }
+
+0[xX][0-9a-fA-F_]*([uU]?L?|L?[uU]?)[fFi]  { return FLOATINGPOINT; }
+0[bB][01_]*([uU]?L?|L?[uU]?)[fFi]         { return FLOATINGPOINT; }
+[0-9]([uU]?L?|L?[uU]?)[fFi]               { return FLOATINGPOINT; }
+[1-9][0-9_]*([uU]?L?|L?[uU]?)[fFi]        { return FLOATINGPOINT; }
+0[xX][0-9a-fA-F_]*([uU]?L?|L?[uU]?)[fFL]i { return FLOATINGPOINT; }
+0[bB][01_]*([uU]?L?|L?[uU]?)[fFL]i        { return FLOATINGPOINT; }
+[0-9]([uU]?L?|L?[uU]?)[fFL]i              { return FLOATINGPOINT; }
+[1-9][0-9_]*([uU]?L?|L?[uU]?)[fFL]i       { return FLOATINGPOINT; }
+
 
 x\x22                        { BEGIN(hexstring); yymore(); }
 <hexstring>\x22[cwd]?        { BEGIN(suffix); return HEXSTRING; }
