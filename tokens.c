@@ -175,6 +175,7 @@ void print_token(int token) {
   case IDENTIFIER: printf("IDENTIFIER"); break;
 
   case INTEGER: printf("INTEGER"); break;
+  case FLOATINGPOINT: printf("FLOATINGPOINT"); break;
   case DOUBLEQOUTEDSTRING: printf("DoubleQuotedString(%s)", yytext); break;
   case WYSIWYGSTRING: printf("WYSIWYGSTRING(%s)", yytext); break;
   case HEXSTRING: printf("HEXSTRING(%s)", yytext); break;

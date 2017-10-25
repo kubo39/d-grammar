@@ -121,6 +121,9 @@ enum Token {
   // Integer.
   INTEGER,
 
+  // Floating Point.
+  FLOATINGPOINT,
+
   // String.
   DOUBLEQOUTEDSTRING,
 

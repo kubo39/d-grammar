@@ -160,6 +160,9 @@ __parameters  { return SPPARAMETERS; }
 [0-9]([uU]?L?|L?[uU]?)              { return INTEGER; }
 [1-9][0-9_]*([uU]?L?|L?[uU]?)       { return INTEGER; }
 
+[0-9]\.[0-9]*([fFL]?i?)         { return FLOATINGPOINT; }
+[1-9][0-9_]*\.[0-9]*([fFL]?i?)  { return FLOATINGPOINT; }
+
 x\x22                        { BEGIN(hexstring); yymore(); }
 <hexstring>\x22[cwd]?        { BEGIN(suffix); return HEXSTRING; }
 
