@@ -171,9 +171,9 @@ x\x22                        { BEGIN(hexstring); yymore(); }
 r\x22                        { BEGIN(wysiwygstring); yymore(); }
 <wysiwygstring>\x22[cwd]?    { BEGIN(suffix); return WYSIWYGSTRING; }
 
-<wysiwygstring><<EOF>>                { yymore(); }
+<wysiwygstring><<EOF>>                { return -1; }
 <wysiwygstring>[\x0D\x0A\x2028\x2029] { yymore(); }
-<wysiwygstring>[\x00\x1A]             { yymore(); }
+<wysiwygstring>[\x00\x1A]             { return -1; }
 <wysiwygstring>.                      { yymore(); }
 
 \x60                                    { BEGIN(alternativewysiwygstring); yymore(); }
