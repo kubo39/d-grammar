@@ -162,16 +162,16 @@ void print_token(int token) {
   case WCHAR: printf("Ident(WCHAR)"); break;
   case WHILE: printf("Ident(WHILE)"); break;
   case WITH: printf("Ident(WITH)"); break;
-  case SPFILE: printf("Ident(SPFILE)"); break;
-  case SPFILEFULLPATH: printf("Ident(SPFILEFULLPATH)"); break;
-  case SPMODULE: printf("Ident(SPMODULE)"); break;
-  case SPLINE: printf("Ident(SPLINE)"); break;
-  case SPFUNCTION: printf("Ident(SPFUNCTION)"); break;
-  case SPPRETTYFUNCION: printf("Ident(SPPRETTYFUNCION)"); break;
-  case SPGSHARED: printf("Ident(SPGSHARED)"); break;
-  case SPTRAITS: printf("Ident(SPTRAITS)"); break;
-  case SPVECTOR: printf("Ident(SPVECTOR)"); break;
-  case SPPARAMETERS: printf("Ident(SPPARAMETERS)"); break;
+  case SPECIAL_FILE: printf("Ident(SPECIAL_FILE)"); break;
+  case SPECIAL_FILEFULLPATH: printf("Ident(SPECIAL_FILEFULLPATH)"); break;
+  case SPECIAL_MODULE: printf("Ident(SPECIAL_MODULE)"); break;
+  case SPECIAL_LINE: printf("Ident(SPECIAL_LINE)"); break;
+  case SPECIAL_FUNCTION: printf("Ident(SPECIAL_FUNCTION)"); break;
+  case SPECIAL_PRETTYFUNCION: printf("Ident(SPECIAL_PRETTYFUNCION)"); break;
+  case SPECIAL_GSHARED: printf("Ident(SPECIAL_GSHARED)"); break;
+  case SPECIAL_TRAITS: printf("Ident(SPECIAL_TRAITS)"); break;
+  case SPECIAL_VECTOR: printf("Ident(SPECIAL_VECTOR)"); break;
+  case SPECIAL_PARAMETERS: printf("Ident(SPECIAL_PARAMETERS)"); break;
   case IDENTIFIER: printf("IDENTIFIER"); break;
 
   case INTEGER: printf("INTEGER"); break;

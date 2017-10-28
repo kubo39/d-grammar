@@ -142,16 +142,16 @@ wchar  { return WCHAR; }
 while  { return WHILE; }
 with  { return WITH; }
 
-__FILE__  { return SPFILE; }
-__FILE_FULL_PATH__  { return SPFILEFULLPATH; }
-__MODULE__  { return SPMODULE; }
-__LINE__  { return SPLINE; }
-__FUNCTION__  { return SPFUNCTION; }
-__PRETTY_FUNCTION__  { return SPPRETTYFUNCION; }
-__gshared  { return SPGSHARED; }
-__traits  { return SPTRAITS; }
-__vector  { return SPVECTOR; }
-__parameters  { return SPPARAMETERS; }
+__FILE__  { return SPECIAL_FILE; }
+__FILE_FULL_PATH__  { return SPECIAL_FILEFULLPATH; }
+__MODULE__  { return SPECIAL_MODULE; }
+__LINE__  { return SPECIAL_LINE; }
+__FUNCTION__  { return SPECIAL_FUNCTION; }
+__PRETTY_FUNCTION__  { return SPECIAL_PRETTYFUNCION; }
+__gshared  { return SPECIAL_GSHARED; }
+__traits  { return SPECIAL_TRAITS; }
+__vector  { return SPECIAL_VECTOR; }
+__parameters  { return SPECIAL_PARAMETERS; }
 
 {identifier} { return IDENTIFIER; }
 
