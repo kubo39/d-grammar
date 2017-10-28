@@ -199,9 +199,9 @@ void print_token(int token) {
   case LSHRSHEQ: printf("LSHRSHEQ"); break;
   case RE: printf("RE"); break;
   case RSHEQ: printf("RSHEQ"); break;
-  case RSHRSHRSHEQ: printf("RSHRSHRSHEQ"); break;
-  case RSH: printf("RSH"); break;
   case RSHRSHEQ: printf("RSHRSHEQ"); break;
+  case RSH: printf("RSH"); break;
+  case RSHRSH: printf("RSHRSH"); break;
   case NOTEQ: printf("NOTEQ"); break;
   case NOTLERE: printf("NOTLERE"); break;
   case NOTLEREEQ: printf("NOTLEREEQ"); break;

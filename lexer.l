@@ -131,7 +131,7 @@ typeof  { return TYPEOF; }
 ubyte  { return UBYTE; }
 ucent  { return UCENT; }
 uint  { return UINT; }
-ulong  { return LONG; }
+ulong  { return ULONG; }
 union  { return UNION; }
 unittest  { return UNITTEST; }
 ushort  { return USHORT; }
@@ -263,9 +263,9 @@ q\{                          { BEGIN(tokenstring); yymore(); }
 \>      { return '>'; }
 \>=     { return RE; }
 \>\>=   { return RSHEQ; }
-\>\>\>= { return RSHRSHRSHEQ; }
+\>\>\>= { return RSHRSHEQ; }
 \>\>    { return RSH; }
-\>\>\>  { return RSHRSHEQ; }
+\>\>\>  { return RSHRSH; }
 \!      { return '!'; }
 \!=     { return NOTEQ; }
 \!\<\>  { return NOTLERE; }
