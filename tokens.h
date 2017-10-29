@@ -225,4 +225,7 @@ enum Token {
   CARETCARET,
   CARETCARETEQ,
   TILDEEQ,
+
+  // For lambda expression.
+  EQRSH,
 };

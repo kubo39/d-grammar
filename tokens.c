@@ -268,6 +268,9 @@ void print_token(int token) {
   case CARETCARET: printf("CARETCARET"); break;
   case CARETCARETEQ: printf("CARETCARETEQ"); break;
   case TILDEEQ: printf("TILDEEQ"); break;
+
+  case EQRSH: printf("EQRSH"); break;
+
   default: printf("can't print token %d", token); abort();
   }
   printf("\n");

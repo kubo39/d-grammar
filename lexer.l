@@ -349,6 +349,8 @@ q\{                          { BEGIN(tokenstring); yymore(); }
 \~      { return '~'; }
 \~=     { return TILDEEQ; }
 
+=\> { return EQRSH; /* For lambda expression. */ }
+
 <<EOF>> { return 0; }
 
 %%
