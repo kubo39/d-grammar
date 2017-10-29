@@ -153,6 +153,57 @@ __traits  { return SPECIAL_TRAITS; }
 __vector  { return SPECIAL_VECTOR; }
 __parameters  { return SPECIAL_PARAMETERS; }
 
+isAbstractClass { return TRAITS_ISABSTRACTCLASS; }
+isArithmetic { return TRAITS_ISARITHMETIC; }
+isAssociativeArray { return TRAITS_ISASSOCIATIVEARRAY; }
+isFinalClass { return TRAITS_ISFINALCLASS; }
+isPOD { return TRAITS_ISPOD; }
+isNested { return TRAITS_ISNESTED; }
+isFloating { return TRAITS_ISFLOATING; }
+isIntegral { return TRAITS_INTEGRAL; }
+isScalar { return TRAITS_ISSCALAR; }
+isStaticArray { return TRAITS_ISSTATICARRAY; }
+isUnsigned { return TRAITS_ISUNSIGNED; }
+isVirtualFunction { return TRAITS_ISVIRTUALFUNCTION; }
+isVirtualMethod { return TRAITS_ISVIRTUALMETHOD; }
+isAbstractFunction { return TRAITS_ISABSTRACTFUNCTION; }
+isFinalFunction { return TRAITS_ISFINALFUNCTION; }
+isStaticFunction { return TRAITS_ISSTATICFUNCTION; }
+isOverrideFunction { return TRAITS_ISOVERRIDEFUNCTION; }
+isTemplate { return TRAITS_ISTEMPLATE; }
+isRef { return TRAITS_ISREF; }
+isOut { return TRAITS_ISOUT; }
+isLazy { return TRAITS_ISLAZY; }
+hasMember { return TRAITS_HASMANY; }
+identifier { return TRAITS_IDENTIFIER; }
+getAliasThis { return TRAITS_GETALIASTHIS; }
+getAttributes { return TRAITS_GETATTRIBUTES; }
+getFunctionAttributes { return TRAITS_GETFUNCTIONATTRIBUTES; }
+getFunctionVariadicStyle { return TRAITS_GETFUNCTIONVARIADICSTYLE; }
+getLinkage { return TRAITS_GETLINKAGE; }
+getMember { return TRAITS_GETMEMBER; }
+getOverloads { return TRAITS_GETOVERLOADS; }
+getParameterStorageClasses { return TRAITS_GETPARAMETERSTORAGECLASSES; }
+getPointerBitmap { return TRAITS_GETPOINTERBITMAP; }
+getProtection { return TRAITS_GETPROTECTION; }
+getVirtualFunctions { return TRAITS_GETVIRTUALFUNCTIONS; }
+getVirtualMethods { return TRAITS_GETVIRTUALMETHODS; }
+getUnitTests { return TRAITS_UNITTEST; }
+parent { return TRAITS_PARENT; }
+classInstanceSize { return TRAITS_CLASSINSTANCESIZE; }
+getVirtualIndex { return TRAITS_GETVIRTUALINDEX; }
+allMembers { return TRAITS_ALLMEMBERS; }
+derivedMembers { return TRAITS_DERIVEDMEMBERS; }
+isSame { return TRAITS_ISSAME; }
+compiles { return TRAITS_COMPILES; }
+
+property { return PROPERTY; }
+safe { return SAFE; }
+trusted { return TRUSTED; }
+system { return SYSTEM; }
+disable { return DISABLE; }
+nogc { return NOGC; }
+
 {identifier} { return IDENTIFIER; }
 
 0[xX][0-9a-fA-F_]*[0-9a-fA-F][0-9a-fA-F_]*([uU]?L?|L?[uU]?) { return INTEGER; }
