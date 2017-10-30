@@ -6,7 +6,7 @@ BISON ?= bison
 
 .PHONY: all clean
 
-all: lexer
+all: lexer parser-lalr
 
 lexer: lexer_main.o lexer.o tokens.o
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -22,6 +22,21 @@ lex.yy.c: lexer.l
 
 lexer.o: lex.yy.c
 	$(CC) -include tokens.h -c -o $@ $<
+
+lexer-lalr.o: lex.yy.c parser-lalr.tab.h
+	$(CC) -include parse.tab.h -c -o $@ $<
+
+parser-lalr: parser-lalr.o parser-main.o lexer-lalr.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+parser-lalr.o: parse.tab.c
+	$(CC) -c -o $@ $<
+
+parser-lalr-main.o: parser-lalr-main.c
+	$(CC) -std=c99 -c -o $@ $<
+
+parse.tab.c parser-lalr.tab.h: parse.y
+	$(BISON) $< -d -p rs -v --report=all --warnings=error=all
 
 clean:
 	rm *.o lexer lex.yy.c
