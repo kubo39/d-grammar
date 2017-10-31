@@ -407,22 +407,21 @@ and_expression:
         ;
 
 cmp_expression:
-                shift_expression { $$ = $1; }
-        |       equal_expression { $$ = $1; }
+                equal_expression { $$ = $1; }
         |       identity_expression { $$ = $1; }
         |       rel_expression { $$ = $1; }
         |       in_expression { $$ = $1; }
-        ;
+                ;
 
 equal_expression:
                 shift_expression EQEQ shift_expression { $$ = mk_node("EqualExpression", 2, $1, $3); }
         |       shift_expression NOTEQ shift_expression { $$ = mk_node("NotEqualExpression", 2, $1, $3); }
-        ;
+                ;
 
 identity_expression:
                 shift_expression IS shift_expression { $$ = mk_node("IsExpression", 2, $1, $3); }
         |       shift_expression '!' IS shift_expression { $$ = mk_node("NotIsExpression", 2, $1, $3); }
-        ;
+                ;
 
 rel_expression:
                 shift_expression '<' shift_expression { $$ = mk_node("LessExpression", 2, $1, $3); }
@@ -437,7 +436,7 @@ rel_expression:
         |       shift_expression NOTREEQ shift_expression { $$ = mk_node("RelExpression", 2, $1, $3); }
         |       shift_expression NOTLE shift_expression { $$ = mk_node("RelExpression", 2, $1, $3); }
         |       shift_expression NOTLEEQ shift_expression { $$ = mk_node("RelExpression", 2, $1, $3); }
-        ;
+                ;
 
 in_expression:
                 shift_expression IN shift_expression { $$ = mk_node("InExpression", 2, $1, $3); }
@@ -904,8 +903,8 @@ expression_statement:
                 ;
 
 declaration_statement:
-                declaration { $$ = $1; }
-        |       storage_classes declaration
+                declaration { $$ = mk_node("DeclarationStatement", 1, $1); }
+        |       storage_classes declaration { $$ = mk_node("DeclarationStatement", 2, $1, $2); }
                 ;
 
 if_statement:
@@ -915,10 +914,10 @@ if_statement:
 
 if_condition:
                 expression { $$ = mk_node("IfCondition", 1, $1); }
-        |       AUTO IDENTIFIER '=' expression
-        |       type_ctors IDENTIFIER '=' expression
-        |       basic_type declaration '=' expression
-        |       type_ctors basic_type declaration '=' expression
+        |       AUTO IDENTIFIER '=' expression { $$ = mk_node("IfCondition", 3, $1, $2, $4); }
+        |       type_ctors IDENTIFIER '=' expression { $$ = mk_node("IfCondition", 3, $1, $2, $4); }
+        |       basic_type declaration '=' expression { $$ = mk_node("IfCondition", 3, $1, $2, $4); }
+        |       type_ctors basic_type declaration '=' expression { $$ = mk_node("IfCondition", 4, $1, $2, $3, $5); }
                 ;
 
 then_statement:
@@ -970,12 +969,12 @@ foreach_type_list:
                 ;
 
 foreach_type:
-                basic_type declaration { $$ = ext_node($1, 1, $2); }
-        |       foreach_type_attribute basic_type declaration
-        |       IDENTIFIER
-        |       foreach_type_attribute IDENTIFIER
-        |       ALIAS IDENTIFIER
-        |       foreach_type_attribute ALIAS IDENTIFIER
+                basic_type declaration { $$ = mk_node("ForeachType" 2, $1, $2); }
+        |       foreach_type_attribute basic_type declaration { $$ = mk_node("ForeachType" 3, $1, $2, $3); }
+        |       IDENTIFIER { $$ = mk_node("ForeachType", 1, $1); }
+        |       foreach_type_attribute IDENTIFIER { $$ = mk_node("ForeachType" 2, $1, $2); }
+        |       ALIAS IDENTIFIER { $$ = mk_node("ForeachType" 2, $1, $2); }
+        |       foreach_type_attribute ALIAS IDENTIFIER { $$ = mk_node("ForeachType" 3, $1, $2, $3); }
                 ;
 
 foreach_type_attribute:
@@ -989,7 +988,7 @@ foreach_aggregate:
                 ;
 
 range_foreach:
-                foreach '(' foreach_type ';' lwr_expression DOTDOT upr_expression ')'
+                foreach '(' foreach_type ';' lwr_expression DOTDOT upr_expression ')' { $$ = mk_node("RangeForeach", 4, $1, $3, $5, $7); }
                 ;
 
 lwr_expression:
@@ -1001,7 +1000,7 @@ upr_expression:
                 ;
 
 foreach_range_statement:
-                range_foreach scope_statement
+                range_foreach scope_statement { $$ = mk_node("ForeachRangeStatement", 2, $1, $2); }
                 ;
 
 switch_statement:
