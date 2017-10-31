@@ -253,6 +253,17 @@ extern char *yytext;
 %%
 
 /**
+Start.
+*/
+start:
+                type
+        |       statement
+        |       expression
+        |       declaration
+        |       module
+                ;
+
+/**
 Type.
 */
 
@@ -489,6 +500,7 @@ new_expression_with_args:
         |       NEW type allocator_arguments '(' ')' { $$ = mk_node("NewExpression", 2, $2, $3); }
         |       NEW type '(' argument_list ')' { $$ = mk_node("NewExpression", 2, $2, $4); }
         |       NEW type allocator_arguments '(' argument_list ')' { $$ = mk_node("NewExpression", 3, $2, $3, $5); }
+        |       new_anon_class_expression { $$ = $1; }
         ;
 
 allocator_arguments:
@@ -599,6 +611,7 @@ primary_expression:
         |       is_expression { $$ = $1; }
         |       '(' expression ')' { $$ = $2; }
         |       traits_expression { $$ = $1; }
+        |       special_keyword { $$ = $1; }
         ;
 
 string_literals:
@@ -1271,6 +1284,7 @@ storage_class:
         |       INOUT { $$ = mk_atom(yytext); }
         |       SHARED { $$ = mk_atom(yytext); }
         |       SPECIAL_GSHARED { $$ = mk_atom(yytext); }
+        |       property { $$ = $1; }
         |       NOTHROW { $$ = mk_atom(yytext); }
         |       PURE { $$ = mk_atom(yytext); }
         |       REF { $$ = mk_atom(yytext); }
@@ -1364,10 +1378,15 @@ parameter_list:
 
 parameter:
                 basic_type declarator { $$ = mk_node("Parameter", 2, $1, $2); }
+        |       inout basic_type declarator { $$ = mk_node("Parameter", 3, $1, $2, $3); }
         |       basic_type declarator DOTDOTDOT { $$ = mk_node("Parameter", 3, $1, $2, $3); }
+        |       inout basic_type declarator DOTDOTDOT { $$ = mk_node("Parameter", 4, $1, $2, $3, $4); }
         |       basic_type declarator '=' assign_expression { $$ = mk_node("Parameter", 3, $1, $2, $4); }
+        |       inout basic_type declarator '=' assign_expression { $$ = mk_node("Parameter", 4, $1, $2, $3, $5); }
         |       type { $$ = mk_node("Parameter", 1, $1); }
+        |       inout type { $$ = mk_node("Parameter", 2, $1, $2); }
         |       type DOTDOTDOT { $$ = mk_node("Parameter", 2, $1, $2); }
+        |       inout type DOTDOTDOT { $$ = mk_node("Parameter", 3, $1, $2, $3); }
                 ;
 
 inout:
