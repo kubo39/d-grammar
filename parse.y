@@ -1170,8 +1170,8 @@ auto_declaration_x:
         ;
 
 auto_declaration_y:
-                IDENTIFIER '=' initializer
-        |       IDENTIFIER template_parameters '=' initializer
+                IDENTIFIER '=' initializer { $$ = mk_node("AutoDeclarationY", 2, $1, $3); }
+        |       IDENTIFIER template_parameters '=' initializer { $$ = mk_node("AutoDeclarationY", 3, $1, $2, $4); }
         ;
 
 var_declarations:
@@ -1185,16 +1185,16 @@ declarators:
         ;
 
 declarator_initializer:
-                var_declarator { $$ = $1; }
-        |       var_declarator '=' initializer
-        |       var_declarator template_parameters '=' initializer
+                var_declarator { $$ = mk_node("DeclarationInitializer", 1, $1); }
+        |       var_declarator '=' initializer { $$ = mk_node("DeclarationInitializer", 2, $1, $3); }
+        |       var_declarator template_parameters '=' initializer { $$ = mk_node("DeclarationInitializer", 3, $1, $2, $4); }
         |       alt_declarator { $$ = $1; }
-        |       alt_declarator '=' initializer
+        |       alt_declarator '=' initializer { $$ = mk_node("DeclarationInitializer", 2, $1, $3); }
         ;
 
 declarator_identifier_list:
                 declarator_identifier { $$ = $1; }
-        |       declarator_identifier ',' declarator_identifier_list
+        |       declarator_identifier ',' declarator_identifier_list { $$ = ext_node($1, 1, $3); }
         ;
 
 declarator_identifier:
@@ -1336,8 +1336,8 @@ struct_member_initializers:
                 ;
 
 struct_member_initializer:
-                non_void_initializer { $$ = $1; }
-        |       IDENTIFIER ':' non_void_initializer
+                non_void_initializer { $$ = mk_node("StructMemberInitializer", 1, $1); }
+        |       IDENTIFIER ':' non_void_initializer  { $$ = mk_node("StructMemberInitializer", 2, $1, $3); }
                 ;
 
 /**
@@ -1448,7 +1448,7 @@ in_statement:
 
 out_statement:
                 OUT block_statement { $$ = mk_node("OutStatement", 1, $2); }
-        |       OUT '(' IDENTIFIER ')' block_statement
+        |       OUT '(' IDENTIFIER ')' block_statement { $$ = mk_node("OutStatement", 2, $3, $5); }
                 ;
 
 body_statement:
@@ -1609,7 +1609,7 @@ base_class_list:
                 ;
 
 base_interface_list:
-                ':' interfaces
+                ':' interfaces { $$ = $2; }
                 ;
 
 super_class:
@@ -1618,7 +1618,7 @@ super_class:
 
 interfaces:
                 interface { $$ = $1; }
-        |       interface ',' interfaces
+        |       interface ',' interfaces { $$ = ext_node($1, 1, $3); }
                 ;
 
 interface:
