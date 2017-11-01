@@ -660,8 +660,8 @@ function_literal:
         |       DELEGATE parameter_member_attributes function_literal_body { $$ = mk_node("FunctionLiteral", 2, $2, $3); }
         |       DELEGATE type parameter_member_attributes function_literal_body { $$ = mk_node("FunctionLiteral", 3, $2, $3, $4); }
         |       parameter_member_attributes function_literal_body { $$ = mk_node("FunctionLiteral", 2, $1, $2); }
-        |       function_literal_body
-        |       lambda
+        |       function_literal_body { $$ = $1; }
+        |       lambda { $$ = $1; }
         ;
 
 parameter_attributes:
@@ -830,11 +830,6 @@ no_scope_statement:
         |       block_statement { $$ = $1; }
         ;
 
-non_empty_or_scope_block_statement:
-                non_empty_statement { $$ = $1; }
-        |       scope_block_statement { $$ = $1; }
-        ;
-
 non_empty_statement:
                 non_empty_statement_no_case_no_default { $$ = $1; }
         |       case_statement { $$ = $1; }
@@ -860,7 +855,7 @@ non_empty_statement_no_case_no_default:
         |       with_statement { $$ = $1; }
         |       synchronized_statement { $$ = $1; }
         |       try_statement { $$ = $1; }
-        |       scope_guard_statement { $$ = $1; }
+        |       scope_block_statement { $$ = $1; }
         |       throw_statement { $$ = $1; }
         /* |       asm_statement */
         |       pragma_statement { $$ = $1; }
@@ -875,7 +870,6 @@ non_empty_statement_no_case_no_default:
 
 scope_statement:
                 non_empty_statement { $$ = $1; }
-        |       block_statement { $$ = $1; }
                 ;
 
 scope_block_statement:
@@ -1039,7 +1033,6 @@ statement_list_no_case_no_default:
 statement_no_case_no_default:
                 ';' { $$ = mk_none(); }
         |       non_empty_statement_no_case_no_default { $$ = $1; }
-        |       scope_block_statement { $$ = $1; }
                 ;
 
 final_switch_statement:
@@ -1104,10 +1097,6 @@ finally_statement:
 
 throw_statement:
                 THROW expression { $$ = mk_node("ThrowStatement", 1, $2); }
-                ;
-
-scope_guard_statement:
-                non_empty_or_scope_block_statement { $$ = $1; }
                 ;
 
 pragma_statement:
@@ -1935,7 +1924,7 @@ Conditional.
 
 conditional_declaration:
                 condition declaration_block { $$ = mk_node("ConditionalDeclaration", 2, $1, $2); }
-        |       condition declaration_block ELSE declaration_block
+        |       condition declaration_block ELSE declaration_block { $$ = mk_node("ConditionalDeclaration", 3, $1, $2, $4); }
         |       condition ':' { $$ = mk_node("ConditionalDeclaration", 1, $1); }
         |       condition ':' decl_defs { $$ = mk_node("ConditionalDeclaration", 2, $1, $3); }
         |       condition declaration_block ELSE ':' { $$ = mk_node("ConditionalDeclaration", 2, $1, $2); }
@@ -2031,10 +2020,8 @@ decl_def:
         |       static_destructor { $$ = $1; }
         |       shared_static_constructor { $$ = $1; }
         |       shared_static_destructor { $$ = $1; }
-        |       conditional_declaration { $$ = $1; }
         |       debug_specification { $$ = $1; }
         |       version_specification { $$ = $1; }
-        |       static_assert { $$ = $1; }
         |       template_declaration { $$ = $1; }
         |       template_mixin_declaration { $$ = $1; }
         |       template_mixin { $$ = $1; }
