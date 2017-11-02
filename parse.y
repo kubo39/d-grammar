@@ -231,22 +231,6 @@ extern char *yytext;
 
 %token IDENTIFIER
 
-%right '=' SHLEQ SHREQ MINUSEQ ANDEQ OREQ PLUSEQ STAREQ SLASHEQ CARETEQ PERCENTEQ
-%right LARROW
-%left OROR
-%left ANDAND
-%left EQEQ NE
-%left '<' '>' LE GE
-%left '|'
-%left '^'
-%left '&'
-%left SHL SHR
-%left '+' '-'
-%left '*' '/' '%'
-
-%precedence '{' '[' '(' '.'
-
-
 %start start
 
 %%
