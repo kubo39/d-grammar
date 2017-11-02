@@ -243,7 +243,6 @@ extern char *yytext;
 %left SHL SHR
 %left '+' '-'
 %left '*' '/' '%'
-%precedence '!'
 
 %precedence '{' '[' '(' '.'
 
@@ -1141,12 +1140,12 @@ alias_declaration_x:
         ;
 
 alias_declaration_y:
-                IDENTIFIER '=' type
-        |       IDENTIFIER template_parameters '=' type
-        |       IDENTIFIER '=' storage_classes type
-        |       IDENTIFIER template_parameters '=' storage_classes type
-        |       IDENTIFIER '=' function_literal
-        |       IDENTIFIER template_parameters '=' function_literal
+                IDENTIFIER '=' type { $$ = mk_node("AliasDeclarationY", 2, $1, $3); }
+        |       IDENTIFIER template_parameters '=' type { $$ = mk_node("AliasDeclarationY", 3, $1, $2, $4); }
+        |       IDENTIFIER '=' storage_classes type { $$ = mk_node("AliasDeclarationY", 3, $1, $3, $4); }
+        |       IDENTIFIER template_parameters '=' storage_classes type { $$ = mk_node("AliasDeclarationY", 4, $1, $2, $4, $5); }
+        |       IDENTIFIER '=' function_literal { $$ = mk_node("AliasDeclarationY", 2, $1, $3); }
+        |       IDENTIFIER template_parameters '=' function_literal { $$ = mk_node("AliasDeclarationY", 3, $1, $2, $4); }
         ;
 
 auto_declaration:
@@ -1248,7 +1247,7 @@ alt_declarator_suffix:
 
 alt_func_declarator_suffix:
                 parameters { $$ = $1; }
-        |       parameters member_function_attributes
+        |       parameters member_function_attributes { $$ = ext_node($1, 1, $2); }
         ;
 
 storage_classes:
@@ -1289,28 +1288,11 @@ void_initializer:
 
 non_void_initializer:
                 exp_initializer { $$ = $1; }
-        |       array_initializer { $$ = $1; }
         |       struct_initializer { $$ = $1; }
                 ;
 
 exp_initializer:
                 assign_expression { $$ = $1; }
-                ;
-
-array_initializer:
-                '[' ']' { $$ = mk_none(); }
-        |       '[' array_member_initializations ']' { $$ = $2; }
-                ;
-
-array_member_initializations:
-                array_member_initialization { $$ = $1; }
-        |       array_member_initialization ',' { $$ = $1; }
-        |       array_member_initialization ',' array_member_initializations { $$ = ext_node($1, 1, $3); }
-                ;
-
-array_member_initialization:
-                non_void_initializer { $$ = $1; }
-        |       assign_expression ':' non_void_initializer
                 ;
 
 struct_initializer:
