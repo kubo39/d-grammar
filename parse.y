@@ -989,15 +989,7 @@ case_statement:
                 ;
 
 case_range_statement:
-                CASE first_exp ':' DOTDOT CASE last_exp ':' scope_statement { $$ = mk_node("CaseRangeStatement", 3, $2, $6, $8); }
-                ;
-
-first_exp:
-                assign_expression { $$ = $1; }
-                ;
-
-last_exp:
-                assign_expression { $$ = $1; }
+                CASE assign_expression ':' DOTDOT CASE assign_expression ':' scope_statement { $$ = mk_node("CaseRangeStatement", 3, $2, $6, $8); }
                 ;
 
 default_statement:
