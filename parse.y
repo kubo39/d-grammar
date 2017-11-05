@@ -293,6 +293,7 @@ basic_type_x:
         |       IDOUBLE { $$ = mk_atom(yytext); }
         |       IREAL { $$ = mk_atom(yytext); }
         |       CFLOAT { $$ = mk_atom(yytext); }
+        |       CDOUBLE { $$ = mk_atom(yytext); }
         |       CREAL { $$ = mk_atom(yytext); }
         |       VOID { $$ = mk_atom(yytext); }
                 ;
