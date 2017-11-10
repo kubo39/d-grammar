@@ -1425,16 +1425,6 @@ postblit:
         |       THIS '(' THIS ')' member_function_attributes function_body { $$ = mk_node("Postblit", 2, $5, $6); }
                 ;
 
-allocator:
-                NEW parameters ';' { $$ = mk_node("Allocator", 1, $2); }
-        |       NEW parameters function_body { $$ = mk_node("Allocator", 2, $2, $3); }
-                ;
-
-deallocator:
-                DELETE parameters ';' { $$ = mk_node("Deallocator", 1, $2); }
-        |       DELETE parameters function_body { $$ = mk_node("Deallocator", 2, $2, $3); }
-                ;
-
 invariant:
                 INVARIANT '(' ')' block_statement { $$ = mk_node("Invariant", 1, $4); }
         |       INVARIANT block_statement { $$ = mk_node("Invariant", 1, $2); }
@@ -1970,8 +1960,6 @@ decl_def:
         |       constructor { $$ = $1; }
         |       destructor { $$ = $1; }
         |       postblit { $$ = $1; }
-        |       allocator { $$ = $1; }
-        |       deallocator { $$ = $1; }
         |       invariant { $$ = $1; }
         |       unittest { $$ = $1; }
         |       alias_this { $$ = $1; }
