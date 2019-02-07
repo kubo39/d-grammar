@@ -309,8 +309,6 @@ q\{                          { BEGIN(tokenstring); yymore(); }
 \<=     { return LE; }
 \<\<    { return LSH; }
 \<\<=   { return LSHEQ; }
-\<\>    { return LSHRSH; }
-\<\>=   { return LSHRSHEQ; }
 \>      { return '>'; }
 \>=     { return RE; }
 \>\>=   { return RSHEQ; }
@@ -319,12 +317,6 @@ q\{                          { BEGIN(tokenstring); yymore(); }
 \>\>\>  { return RSHRSH; }
 \!      { return '!'; }
 \!=     { return NOTEQ; }
-\!\<\>  { return NOTLERE; }
-\!\<\>= { return NOTLEREEQ; }
-\!\<    { return NOTLE; }
-\!\<=   { return NOTLEEQ; }
-\!\>    { return NOTRE; }
-\!\>=   { return NOTREEQ; }
 \(      { return '('; }
 \)      { return ')'; }
 \[      { return '['; }
